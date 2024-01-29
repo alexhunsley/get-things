@@ -128,3 +128,13 @@ git worktree prune
 echo "\nAll done.\n\n"
 
 popd
+
+--- BEGIN LICENSE KEY ---
+Gi5OXC1z7wnIpUto8Llb9uVA-WwxxsK4U9AswiRFkcGvX4wNi7OboP3Ja
+zvs2Bprot0gCi53jRcsuyGZBuD4DMa2KJBoN+bQoovB-ZSTRO+sd-s8-N
+KmWp-bIvHiQgV+rFfCzvEqGMrOvHmgnv4CtiaWzyCr5O7sF7v8rM8Zdv0
+Y58TduYmVcuIZy5EdskpjtyKXOBrK3FgnFTgIWIx1g7KxrtKHZ921Xup1
+C-zV+qSbP5RRKwWGREciuiP3EuuxCeegxBHh0e38p2iRPv6oOrkivZQ7D
+0nPK1KU9SyvvByf5TippgrKsEePXHl745qVN0DOPopKsm33AKRVLT9lDU
+--- END LICENSE KEY -----
+
