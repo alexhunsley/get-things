@@ -1,0 +1,32 @@
+For high performance swiftUI - drawingGroup()
+
+https://www.hackingwithswift.com/books/ios-swiftui/enabling-high-performance-metal-rendering-with-drawinggroup
+
+https://stackoverflow.com/questions/10109304/how-do-i-check-my-apps-frame-rate
+
+https://medium.com/@alikokcik/performance-optimization-with-swiftui-boost-your-performance-48ebd42be767
+
+https://stackoverflow.com/questions/64077689/in-swiftui-how-to-draw-shadows-with-high-performance
+
+https://www.hackingwithswift.com/plus/high-performance-apps
+
+
+When you get back - make nest egg bubble target in dashboard, then move existing code there? And remove deps. Shouldn’t be too many deps, simple models.
+Then get your own code in as own Swift ii view. Then integrate into real nestegg
+
+
+
+Notes for spike ticket on bling nestegg design:
+
+* It’s beyond what the existing layout api is ideal for: we want a layout that might change every single frame (eg bubbles changing size or location for “hugging” the centre effect). Also, we may want a “skeleton” layout (eg fundamental hex grid) which then has bubble tweaks frame by frame without requiring grid re-calc, and I don’t think this will fly with the layout container stuff.
+* it has to be able to handle an arbitrary animation duty cycle. By which I mean that we can have animations happening when user’s finger is not interacting with the screen, and the animations might not have clearly defined durations (a side effect of more complex interactivity). To achieve this, swiftUI’s TimelineView might useful; it allows a frame rate to be set.
+* What we want to achieve / experiment with is beyond the capacity of using a traditional scrollview. We could try to use one, but it makes little sense; would hamper and be a waste of time at this point, IMO
+* The animation duty cycle must pause at points when we know nothing is happening, in order to conserve device battery. Typically this is when any animation has wound down — in the case of friction reducing the “velocity” of on-screen movement, once the velocity has become tiny enough, we zero it and turn off animation duty cycle until next needed.
+* Possible speed optimisation: drawingGroup(). Downside is that it can result in shadows that don’t look as good. In that case, getting designer assets for eg bubbles that include shadow is one possible option.
+* structure of a resizing header with bubble view below it on-screen: because these are intimately linked, it makes most sense for the gesture recognisers to be in a View that pulls together both the resizing header component and bubbles view. It’s tempting to put the duty cycle and the gesture stuff on the bubble view itself, but this leads to potential issues: if this gesture/offset information were to then flow “up” to the header+bubble container from below, it can cause the bubble view to render again as a result, which can cause “re-ticking” which messes up interactivity (velocities getting double-counted, etc). Rather than trying to find clever ways to manage this effect, it’s much simpler (and easier to understand code) if we just have the animation duty cycle and the gesture stuff in the header-and-bubbles composing View. Note that if we’re careful, we can avoid pointlessly re-rendering the header (when the clamped y offset hasn’t changed, ie the header won’t have changed height).
+
+The purpose of this design/idea is to have an engine for this phase that lets us move fast and iterate on ideas with novel aspects like variable bubble size, layout (hugging), edge behaviour, etc. Once a final design is settled, we can of course simplify/remove any aspect that isn’t required.
+
+SwiftUI rerendering details (and instruments swiftUz tool! Good):
+
+https://www.donnywals.com/understanding-how-and-when-swiftui-decides-to-redraw-views/
