@@ -1,0 +1,62 @@
+Reactors including file renames, moves, etc to go into “pure reactor” commits without functional changes.
+
+Code change levels:
+
+Level 0: just renaming files and things in files (no moves!)
+
+1: moves inside files
+
+2: refactors of code without functional changes
+
+3: functional changes
+
+Strive for as little crossover as possible, when it’s significant activity.
+
+Tx psychology of computer programming from iPhone downloads to calibre (homed on Mac these days).
+
+
+
+
+----
+
+- bars rendering at edges
+- colours in that info box (stupid font stuff)
+- Check test coverage
+- Text field issue
+- Animation duration, put back in custom
+
+- Make tech debt list somewhere; ticket for backlog?
+
+Update teams folk with stuff remaining this morning.
+
+
+----
+
+Snags: (cost us time)
+
+Circular dependencies of tickets (the first one 204 and the next one 205, for starters).
+
+Mitigation: base ticket order and split on journey depth, not purely screen depth.
+
+
+Incorrect labels in figma and tickets (two labels for same screen in different places)
+
+Mitigation: 
+A checking step before work where we verify these things.
+Possibly use variables in figma for screen names, if that’s possible?
+
+
+Effective force push of code that had code dependent on it (in real branch versus spike branch) - I spent time working out where my code needed transplanting to and what it had renamed to.
+Mitigation: check before doing this sort of refactor. Awareness that if code is moved to different branch, you can be in effect doing a “force push” without actually doing one.
+
+
+Invalid analytics spreadsheet: the analytics script didn’t clearly flag up the problem and just continued (error buried in wall of text), produced an invalid mix of data.
+
+Mitigation: analytics script to exit immediately upon finding a problem, and delete all generated files before it runs, so old files can’t be mistaken for newly generated files.
+Could also have some automated testing of analytics script (eg CI) that flags a problem as soon as one is found?
+
+Keeping all reviews in-team (just me and chloe) - we need other eyes sometimes, even if that slows up ticket turnaround.
+
+
+
+---
